@@ -2,6 +2,7 @@
 """
 0-lockboxes
 """
+from collections import deque
 
 
 def canUnlockAll(boxes):
@@ -17,19 +18,21 @@ def canUnlockAll(boxes):
     # Add the first box to the set of opened boxes
     opened_boxes.add(0)
 
-    def unlock_boxes(box_index):
-        """Function to recursively unlock boxes."""
-        for key in boxes[box_index]:  # Iterate through keys in the current box
+    # Initialize a queue with the first box
+    queue = deque([0])
 
+    while queue:
+        # Get the current box from the queue
+        current_box = queue.popleft()
+
+        # Iterate through keys in the current box
+        for key in boxes[current_box]:
             # If the key opens a box that hasn't been opened yet
             if key < len(boxes) and key not in opened_boxes:
                 # Mark the box as opened
                 opened_boxes.add(key)
-                # Recursively unlock the newly opened box
-                unlock_boxes(key)
-
-    # Start unlocking boxes from the first box
-    unlock_boxes(0)
+                # Add the newly opened box to the queue
+                queue.append(key)
 
     # Check if all boxes have been opened
     return len(opened_boxes) == len(boxes)
