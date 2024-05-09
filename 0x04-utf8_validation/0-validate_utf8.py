@@ -3,14 +3,16 @@
 
 
 def validUTF8(data):
-    """Method that determines if a given data set represents
-       a valid UTF-8 encoding
-       Return: True if data is a valid UTF-8 encoding, else return False
-       A character in UTF-8 can be 1 to 4 bytes long
-       The data set can contain multiple characters
-       The data will be represented by a list of integers
-       Each integer represents 1 byte of data, therefore you only need to
-       handle the 8 least significant bits of each integer"""
+    """
+    Method that determines if a given data set represents
+    a valid UTF-8 encoding
+    Return: True if data is a valid UTF-8 encoding, else return False
+    A character in UTF-8 can be 1 to 4 bytes long
+    The data set can contain multiple characters
+    The data will be represented by a list of integers
+    Each integer represents 1 byte of data, therefore you only need to
+    handle the 8 least significant bits of each integer
+    """
     num_bytes_to_follow = 0
 
     for byte in data:
@@ -38,4 +40,7 @@ def validUTF8(data):
             # Decrease the number of bytes left to follow
             num_bytes_to_follow -= 1
 
-    return num_bytes_to_follow == 0
+    if num_bytes_to_follow != 0:
+        return False
+
+    return True
